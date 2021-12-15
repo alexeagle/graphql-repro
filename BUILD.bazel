@@ -1,0 +1,31 @@
+# Add rules here to build your software
+# See https://docs.bazel.build/versions/master/build-ref.html#BUILD_files
+
+
+load("@npm//@graphql-codegen/cli:index.bzl", "graphql_codegen")
+
+graphql_codegen(
+    name = 'types',
+    # chdir = "$(RULEDIR)",
+    outs = [
+        'types.ts',
+    ],
+    # env = {
+    #   'NODE_ENV': 'production',
+    # },
+    args = [
+        '--config',
+        '$(rootpath :codegen.yml)'
+    ],
+    data = [
+        # '@npm//:node_modules',
+        # ":queries",
+        'codegen.yml',
+        'schema.graphql',
+        
+        '@npm//@graphql-codegen/typescript',
+        #'@npm//@graphql-codegen/typescript-operations',
+        #'@npm//@graphql-codegen/typescript-graphql-request',
+    ]
+    #  + glob(['**/queries/*.graphql']),
+)
